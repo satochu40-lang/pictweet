@@ -22,9 +22,10 @@
         <%= f.password_field :password, autocomplete: "off" %>
       </div>
 
+      <%# ★ここを password_confirmation に修正します %>
       <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email %>
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
       </div>
 
       <div class="actions">
