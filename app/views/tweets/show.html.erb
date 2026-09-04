@@ -1,0 +1,11 @@
+<div class="contents row">
+  <div class="content_post">
+    <p><%= @tweet.text %></p>
+    <div class="more">
+      <%= image_tag @tweet.image if @tweet.image.present? %>
+    </div>
+  </div>
+  <div class="container">
+    ＜コメント一覧＞
+  </div>
+</div>
