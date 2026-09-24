@@ -1,8 +1,8 @@
-# spec/factories/tweets.rb の例
+# spec/factories/tweets.rb
 FactoryBot.define do
   factory :tweet do
     text { Faker::Lorem.sentence }
-    image { 'https://s3-ap-northeast-1.amazonaws.com/mercarimaster/uploads/captured_image/content/13/test_image.png' }
-    association :user  # ← これが必要です！
+    image { 'https://s.eximg.jp/exnews/feed/aichoo/aichoo_201503_1.jpg' }
+    association :user
   end
 end

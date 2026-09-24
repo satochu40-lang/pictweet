@@ -1,16 +1,25 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: [:edit, :show]
+  before_action :set_tweet, only: [:edit, :show, :update,:destroy]
   before_action :move_to_index, except: [:index, :show]
 
   def index
-    @tweets = Tweet.all
-  end 
+   @tweets = Tweet.includes(:user).order("created_at DESC")
+  end
 
-  def show
-    
+ def show
+    @comment = Comment.new
+    @comments = @tweet.comments.includes(:user)
   end
 
   def edit
+  end
+
+  def update
+    if @tweet.update(tweet_params)
+      redirect_to root_path
+    else
+      render :edit
+    end
   end
 
   def new
@@ -18,13 +27,16 @@ class TweetsController < ApplicationController
   end
 
   def create
-    Tweet.create(tweet_params)
-    redirect_to '/'
+    @tweet = Tweet.new(tweet_params)
+    if @tweet.save
+      redirect_to root_path
+    else
+      render :new
+    end
   end
 
   def destroy
-    tweet = Tweet.find(params[:id])
-    tweet.destroy
+    @tweet.destroy # ← set_tweet でセットされた @tweet を削除
     redirect_to root_path
   end
 
@@ -35,7 +47,7 @@ class TweetsController < ApplicationController
   end
 
   def tweet_params
-    params.require(:tweet).permit(:name, :image, :text)
+    params.require(:tweet).permit(:name, :image, :text).merge(user_id: current_user.id)
   end
 
   def move_to_index
