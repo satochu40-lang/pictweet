@@ -6,8 +6,9 @@ class TweetsController < ApplicationController
    @tweets = Tweet.includes(:user).order("created_at DESC")
   end
 
-  def show
-    
+ def show
+    @comment = Comment.new
+    @comments = @tweet.comments.includes(:user)
   end
 
   def edit
